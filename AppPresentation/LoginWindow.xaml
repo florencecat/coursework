@@ -1,0 +1,57 @@
+﻿<Window x:Class="View.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:local="clr-namespace:View"
+        Height="480" Width="640" WindowStartupLocation="CenterScreen" WindowStyle="None"
+        AllowsTransparency="True" Background="Transparent">
+    <Border Background="White" CornerRadius="30" MouseDown="mainBorderMouseDown">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Button Style="{StaticResource topButton}" Margin="0 0 15 0" HorizontalAlignment="Right" Click="closeButtonClick">
+                <Icon:PackIconMaterial Kind="CloseCircle" Height="15" Width="15"/>
+            </Button>
+            <Button Style="{StaticResource topButton}" Margin="0 0 55 0" HorizontalAlignment="Right" Click="minimizeButtonClick">
+                <Icon:PackIconMaterial Kind="WindowMinimize" Height="15" Width="15"/>
+            </Button>
+
+            <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="Добро пожаловать!" FontSize="44" FontFamily="Calibri Light" Foreground="#4E7CA6"/>
+            </Border>
+
+            <Border Grid.Row="2" Height="200" Width="250" Margin="100 30 100 50" Background="AliceBlue" CornerRadius="30">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="65"/>
+                            <RowDefinition Height="65"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <TextBlock  Style="{StaticResource loginFormTextBlock}" Text="Логин" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <TextBlock Style="{StaticResource loginFormTextBlock}" Text="Пароль" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right">
+                            <TextBox  Style="{StaticResource loginFormTextBox}" Width="125" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right">
+                            <PasswordBox Style="{StaticResource loginFormPasswordBox}" Width="125" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </StackPanel>
+                    </Grid>
+                    <Button Content="Войти" Width="100" Style="{StaticResource loginFormButton}" Margin="15" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+</Window>
