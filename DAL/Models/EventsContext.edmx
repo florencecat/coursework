@@ -1,0 +1,448 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище EventsContext" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="accessLevels">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="varchar(max)" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" />
+          <Property Name="icon" Type="image" Nullable="false" />
+        </EntityType>
+        <EntityType Name="events">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="archived" Type="bit" Nullable="false" />
+          <Property Name="author" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="varchar(max)" Nullable="false" />
+          <Property Name="category" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" Nullable="false" />
+          <Property Name="preview" Type="image" Nullable="false" />
+          <Property Name="cost" Type="int" />
+        </EntityType>
+        <EntityType Name="participations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="userID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="eventID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="reviews">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="participationID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="rating" Type="tinyint" Nullable="false" />
+          <Property Name="reviewText" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="nickname" Type="varchar(max)" />
+          <Property Name="name" Type="varchar(max)" />
+          <Property Name="surname" Type="varchar(max)" />
+          <Property Name="birthdate" Type="date" />
+          <Property Name="email" Type="varchar(max)" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="type" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_events_categories">
+          <End Role="categories" Type="Self.categories" Multiplicity="1" />
+          <End Role="events" Type="Self.events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="events">
+              <PropertyRef Name="category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_events_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="events" Type="Self.events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="events">
+              <PropertyRef Name="author" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_participations_events">
+          <End Role="events" Type="Self.events" Multiplicity="1" />
+          <End Role="participations" Type="Self.participations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="events">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="participations">
+              <PropertyRef Name="eventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_participations_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="participations" Type="Self.participations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="participations">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_reviews_participations">
+          <End Role="participations" Type="Self.participations" Multiplicity="1" />
+          <End Role="reviews" Type="Self.reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="participations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="reviews">
+              <PropertyRef Name="participationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_users_accessLevels">
+          <End Role="accessLevels" Type="Self.accessLevels" Multiplicity="1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accessLevels">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище EventsContextContainer">
+          <EntitySet Name="accessLevels" EntityType="Self.accessLevels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="categories" EntityType="Self.categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="events" EntityType="Self.events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="participations" EntityType="Self.participations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reviews" EntityType="Self.reviews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_events_categories" Association="Self.FK_events_categories">
+            <End Role="categories" EntitySet="categories" />
+            <End Role="events" EntitySet="events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_events_users" Association="Self.FK_events_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="events" EntitySet="events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_participations_events" Association="Self.FK_participations_events">
+            <End Role="events" EntitySet="events" />
+            <End Role="participations" EntitySet="participations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_participations_users" Association="Self.FK_participations_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="participations" EntitySet="participations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_reviews_participations" Association="Self.FK_reviews_participations">
+            <End Role="participations" EntitySet="participations" />
+            <End Role="reviews" EntitySet="reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_users_accessLevels" Association="Self.FK_users_accessLevels">
+            <End Role="accessLevels" EntitySet="accessLevels" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EventsContext" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="accessLevels">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK_users_accessLevels" FromRole="accessLevels" ToRole="users" />
+        </EntityType>
+        <EntityType Name="categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="icon" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="events" Relationship="Self.FK_events_categories" FromRole="categories" ToRole="events" />
+        </EntityType>
+        <EntityType Name="events">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="archived" Type="Boolean" Nullable="false" />
+          <Property Name="author" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="category" Type="Guid" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="preview" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="cost" Type="Int32" />
+          <NavigationProperty Name="categories" Relationship="Self.FK_events_categories" FromRole="events" ToRole="categories" />
+          <NavigationProperty Name="users" Relationship="Self.FK_events_users" FromRole="events" ToRole="users" />
+          <NavigationProperty Name="participations" Relationship="Self.FK_participations_events" FromRole="events" ToRole="participations" />
+        </EntityType>
+        <EntityType Name="participations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="userID" Type="Guid" Nullable="false" />
+          <Property Name="eventID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="events" Relationship="Self.FK_participations_events" FromRole="participations" ToRole="events" />
+          <NavigationProperty Name="users" Relationship="Self.FK_participations_users" FromRole="participations" ToRole="users" />
+          <NavigationProperty Name="reviews" Relationship="Self.FK_reviews_participations" FromRole="participations" ToRole="reviews" />
+        </EntityType>
+        <EntityType Name="reviews">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="participationID" Type="Guid" Nullable="false" />
+          <Property Name="rating" Type="Byte" Nullable="false" />
+          <Property Name="reviewText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="participations" Relationship="Self.FK_reviews_participations" FromRole="reviews" ToRole="participations" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="nickname" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="surname" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="birthdate" Type="DateTime" Precision="0" />
+          <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="type" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="accessLevels" Relationship="Self.FK_users_accessLevels" FromRole="users" ToRole="accessLevels" />
+          <NavigationProperty Name="events" Relationship="Self.FK_events_users" FromRole="users" ToRole="events" />
+          <NavigationProperty Name="participations" Relationship="Self.FK_participations_users" FromRole="users" ToRole="participations" />
+        </EntityType>
+        <Association Name="FK_users_accessLevels">
+          <End Role="accessLevels" Type="Self.accessLevels" Multiplicity="1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accessLevels">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_events_categories">
+          <End Role="categories" Type="Self.categories" Multiplicity="1" />
+          <End Role="events" Type="Self.events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="events">
+              <PropertyRef Name="category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_events_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="events" Type="Self.events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="events">
+              <PropertyRef Name="author" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_participations_events">
+          <End Role="events" Type="Self.events" Multiplicity="1" />
+          <End Role="participations" Type="Self.participations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="events">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="participations">
+              <PropertyRef Name="eventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_participations_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="participations" Type="Self.participations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="participations">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_reviews_participations">
+          <End Role="participations" Type="Self.participations" Multiplicity="1" />
+          <End Role="reviews" Type="Self.reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="participations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="reviews">
+              <PropertyRef Name="participationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EventsModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="accessLevels" EntityType="Self.accessLevels" />
+          <EntitySet Name="categories" EntityType="Self.categories" />
+          <EntitySet Name="events" EntityType="Self.events" />
+          <EntitySet Name="participations" EntityType="Self.participations" />
+          <EntitySet Name="reviews" EntityType="Self.reviews" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <AssociationSet Name="FK_users_accessLevels" Association="Self.FK_users_accessLevels">
+            <End Role="accessLevels" EntitySet="accessLevels" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_events_categories" Association="Self.FK_events_categories">
+            <End Role="categories" EntitySet="categories" />
+            <End Role="events" EntitySet="events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_events_users" Association="Self.FK_events_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="events" EntitySet="events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_participations_events" Association="Self.FK_participations_events">
+            <End Role="events" EntitySet="events" />
+            <End Role="participations" EntitySet="participations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_participations_users" Association="Self.FK_participations_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="participations" EntitySet="participations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_reviews_participations" Association="Self.FK_reviews_participations">
+            <End Role="participations" EntitySet="participations" />
+            <End Role="reviews" EntitySet="reviews" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище EventsContextContainer" CdmEntityContainer="EventsModel">
+          <EntitySetMapping Name="accessLevels">
+            <EntityTypeMapping TypeName="EventsContext.accessLevels">
+              <MappingFragment StoreEntitySet="accessLevels">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="EventsContext.categories">
+              <MappingFragment StoreEntitySet="categories">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="events">
+            <EntityTypeMapping TypeName="EventsContext.events">
+              <MappingFragment StoreEntitySet="events">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="archived" ColumnName="archived" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="preview" ColumnName="preview" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="participations">
+            <EntityTypeMapping TypeName="EventsContext.participations">
+              <MappingFragment StoreEntitySet="participations">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="eventID" ColumnName="eventID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reviews">
+            <EntityTypeMapping TypeName="EventsContext.reviews">
+              <MappingFragment StoreEntitySet="reviews">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="participationID" ColumnName="participationID" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="reviewText" ColumnName="reviewText" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="EventsContext.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nickname" ColumnName="nickname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="type" ColumnName="type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

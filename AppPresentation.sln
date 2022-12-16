@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "BLL\ViewModel.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "DAL\Model.csproj", "{F7F457B2-84C2-451D-B1DC-F8154E683989}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVM", "C:\Users\ktonk\Downloads\MVVMПримерДиалогаАвторизации\MVVM.csproj", "{1F04DC2C-F5CA-46B2-98A0-A254F05AD82C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{F7F457B2-84C2-451D-B1DC-F8154E683989}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7F457B2-84C2-451D-B1DC-F8154E683989}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7F457B2-84C2-451D-B1DC-F8154E683989}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F04DC2C-F5CA-46B2-98A0-A254F05AD82C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F04DC2C-F5CA-46B2-98A0-A254F05AD82C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F04DC2C-F5CA-46B2-98A0-A254F05AD82C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F04DC2C-F5CA-46B2-98A0-A254F05AD82C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

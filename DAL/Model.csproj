@@ -8,8 +8,8 @@
     <ProjectGuid>{F7F457B2-84C2-451D-B1DC-F8154E683989}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DAL</RootNamespace>
-    <AssemblyName>DAL</AssemblyName>
+    <RootNamespace>Model</RootNamespace>
+    <AssemblyName>Model</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -40,9 +40,14 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.3.6.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.6\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,12 +56,94 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Interfaces\IUserRepository.cs" />
+    <Compile Include="Migrations\202212141821296_NicknameAddedMigration.cs" />
+    <Compile Include="Migrations\202212141821296_NicknameAddedMigration.designer.cs">
+      <DependentUpon>202212141821296_NicknameAddedMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212141836496_PasswordIntToStringMigration.cs" />
+    <Compile Include="Migrations\202212141836496_PasswordIntToStringMigration.designer.cs">
+      <DependentUpon>202212141836496_PasswordIntToStringMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Interfaces\IDbRepository.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Models\accessLevels.cs">
+      <DependentUpon>EventsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\categories.cs">
+      <DependentUpon>EventsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\events.cs">
+      <DependentUpon>EventsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventsContext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventsContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventsContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventsContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventsContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\participations.cs">
+      <DependentUpon>EventsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\reviews.cs">
+      <DependentUpon>EventsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\users.cs">
+      <DependentUpon>EventsContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ModelsRepositories\AccessLevelsRepository.cs" />
+    <Compile Include="Repositories\ModelsRepositories\CategoriesRepository.cs" />
+    <Compile Include="Repositories\DbRepository.cs" />
+    <Compile Include="Repositories\ModelsRepositories\EventsRepository.cs" />
+    <Compile Include="Interfaces\IAccessRepository.cs" />
+    <Compile Include="Repositories\ModelsRepositories\ParticipationsRepository.cs" />
+    <Compile Include="Repositories\ModelsRepositories\ReviewsRepository.cs" />
+    <Compile Include="Repositories\ModelsRepositories\UsersRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="Models\EventsContext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EventsContext.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\EventsContext.edmx.diagram">
+      <DependentUpon>EventsContext.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202212141821296_NicknameAddedMigration.resx">
+      <DependentUpon>202212141821296_NicknameAddedMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212141836496_PasswordIntToStringMigration.resx">
+      <DependentUpon>202212141836496_PasswordIntToStringMigration.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Models\EventsContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EventsContext.edmx</DependentUpon>
+      <LastGenOutput>EventsContext.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\EventsContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EventsContext.edmx</DependentUpon>
+      <LastGenOutput>EventsContext.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
