@@ -3,8 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:View"
+        xmlns:viewModel="clr-namespace:ViewModel.LoginWindow;assembly=ViewModel"
         Height="480" Width="640" WindowStartupLocation="CenterScreen" WindowStyle="None"
         AllowsTransparency="True" Background="Transparent">
+
+    <Window.DataContext>
+        <viewModel:LoginWindowViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    </Window.Resources>
+
+    <Window.Visibility>
+        <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
+    </Window.Visibility>
+    
     <Border Background="White" CornerRadius="30" MouseDown="mainBorderMouseDown">
         <Grid>
             <Grid.RowDefinitions>
@@ -43,13 +57,17 @@
                             <TextBlock Style="{StaticResource loginFormTextBlock}" Text="Пароль" VerticalAlignment="Center"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right">
-                            <TextBox  Style="{StaticResource loginFormTextBox}" Width="125" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource loginFormTextBox}" Width="125" VerticalAlignment="Center"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right">
-                            <PasswordBox Style="{StaticResource loginFormPasswordBox}" Width="125" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                            <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" Style="{StaticResource loginFormPasswordBox}" Width="125" 
+                                         VerticalAlignment="Center" HorizontalAlignment="Right" PasswordChar="*" MaxLength="16"/>
                         </StackPanel>
                     </Grid>
-                    <Button Content="Войти" Width="100" Style="{StaticResource loginFormButton}" Margin="15" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" FontFamily="Calibri Light" FontSize="12"
+                               TextAlignment="Center" TextWrapping="Wrap"/>
+                    <Button Content="Войти" Width="100" Style="{StaticResource loginFormButton}" Margin="7.5" HorizontalAlignment="Center"
+                            Command="{Binding LoginCommand}"/>
                 </StackPanel>
             </Border>
         </Grid>
