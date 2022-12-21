@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks">
+
+    <!--Colors-->
+
+    <Color x:Key="backgroundColor0">#F0F8FF</Color>
+    <Color x:Key="backgroundColor1">#4E7CA6</Color>
+    <Color x:Key="backgroundColor2">#4B657D</Color>
+    <Color x:Key="backgroundColor3">#7FABD3</Color>
+    <Color x:Key="backgroundColor4">#95B5D3</Color>
+    
+    <SolidColorBrush x:Key="mainColor1" Color="#4E7CA6"/>
+    <SolidColorBrush x:Key="mainColor2" Color="#4B657D"/>
+    <SolidColorBrush x:Key="mainColor3" Color="#7FABD3"/>
+    <SolidColorBrush x:Key="mainColor4" Color="#95B5D3"/>
+    <SolidColorBrush x:Key="mainColor5" Color="#DAEAF9"/>
+
+    <SolidColorBrush x:Key="secondaryColor1" Color="#4AAD88"/>
+    <SolidColorBrush x:Key="secondaryColor2" Color="#18714F"/>
+    <SolidColorBrush x:Key="secondaryColor3" Color="#7AD6B3"/>
+    <SolidColorBrush x:Key="secondaryColor4" Color="#93D6BD"/>
+
+    <SolidColorBrush x:Key="secondaryColor5" Color="#5F5CB3"/>
+    <SolidColorBrush x:Key="secondaryColor6" Color="#211E74"/>
+    <SolidColorBrush x:Key="secondaryColor7" Color="#8C89D9"/>
+    <SolidColorBrush x:Key="secondaryColor8" Color="#A19FD9"/>
+
+    <SolidColorBrush x:Key="secondaryColor9" Color="#FF9C6D"/>
+    <SolidColorBrush x:Key="secondaryColor10" Color="#A64E23"/>
+    <SolidColorBrush x:Key="secondaryColor11" Color="#FFB592"/>
+    <SolidColorBrush x:Key="secondaryColor12" Color="#FFC9AF"/>
+
+
+
+</ResourceDictionary>

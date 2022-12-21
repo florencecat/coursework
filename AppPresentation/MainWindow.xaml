@@ -3,6 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:viewModel="clr-namespace:ViewModel.MainWindow;assembly=ViewModel"
+        xmlns:viewModels="clr-namespace:ViewModel.MainWindow.Sections;assembly=ViewModel"
+        xmlns:local="clr-namespace:View"
         Height="720" Width="1080" WindowStartupLocation="CenterScreen" WindowStyle="None"
         AllowsTransparency="True" Background="Transparent">
     
@@ -12,9 +14,39 @@
     
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+
+        <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
+            <local:HomeView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModels:EventsViewModel}">
+            <local:EventsView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModels:UsersViewModel}">
+            <local:UsersView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModels:OrganizationsViewModel}">
+            <local:OrganizationsView/>
+        </DataTemplate>
     </Window.Resources>
 
-    <Border Background="White" CornerRadius="30" MouseDown="mainBorderMouseDown">
+    <Border CornerRadius="15" BorderThickness="3" MouseLeftButtonDown="mainBorderMouseDown">
+        <Border.BorderBrush>
+            <LinearGradientBrush>
+                <GradientStop Color="#4E7CA6" Offset="0"/>
+                <GradientStop Color="AliceBlue" Offset="1.5"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        
+        <Border.Background>
+            <LinearGradientBrush>
+                <GradientStop Color="AliceBlue" Offset="2"/>
+                <GradientStop Color="{StaticResource backgroundColor4}" Offset="-1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
@@ -22,15 +54,11 @@
             </Grid.ColumnDefinitions>
 
             <!--Left SideBar-->
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Border Grid.Row="1" Background="AliceBlue" CornerRadius="30">
+            <Grid Grid.Column="0">
+                <Border Background="AliceBlue" CornerRadius="15">
                     <DockPanel>
                         <TextBlock Text="Афиша событий" DockPanel.Dock="Top" HorizontalAlignment="Center" Foreground="#4E7CA6" FontSize="22" 
-                                   FontFamily="Calibri Light"  Margin="0 22 0 25"/>
+                                   FontFamily="Calibri"  Margin="0 10 0 25"/>
 
                         <TextBlock Text="{Binding CurrentUserAccount.Type}" Foreground="#FF719ABF" FontSize="12" FontFamily="Calibri Light"
                                    DockPanel.Dock="Top" TextAlignment="Center" Margin="0 25 0 5"/>
@@ -40,35 +68,42 @@
                         <Separator Margin="25" DockPanel.Dock="Top" Height="0.8" Background="Black"/>
 
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource menuButton}">
+                            
+                            <RadioButton Tag="{StaticResource mainColor1}" Style="{StaticResource menuButton}" Command="{Binding ShowHomeViewCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <Icon:PackIconMaterial Kind="Home" Style="{StaticResource menuButtonIcon}"/>
-                                    <TextBlock Text="Главная страница"/>
+                                    <TextBlock Style="{StaticResource menuButtonText}" Text="Главная страница"/>
                                 </StackPanel>
-                            </Button>
-                            <Button Style="{StaticResource menuButton}">
+                            </RadioButton>
+                            
+                            <RadioButton Tag="{StaticResource secondaryColor4}" Style="{StaticResource menuButton}" Command="{Binding ShowEventsViewCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <Icon:PackIconMaterial Kind="Ticket" Style="{StaticResource menuButtonIcon}"/>
-                                    <TextBlock Text="События"/>
+                                    <TextBlock Style="{StaticResource menuButtonText}" Text="События"/>
                                 </StackPanel>
-                            </Button>
-                            <Button Style="{StaticResource menuButton}">
+                            </RadioButton>
+                            
+                            <RadioButton Tag="{StaticResource secondaryColor8}" Style="{StaticResource menuButton}" Command="{Binding ShowUsersViewCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <Icon:PackIconMaterial Kind="AccountMultiple" Style="{StaticResource menuButtonIcon}"/>
-                                    <TextBlock Text="Менеджеры"/>
+                                    <TextBlock Style="{StaticResource menuButtonText}" Text="Менеджеры"/>
                                 </StackPanel>
-                            </Button>
-                            <Button Style="{StaticResource menuButton}">
+                            </RadioButton>
+                            
+                            <RadioButton Tag="{StaticResource secondaryColor9}" Style="{StaticResource menuButton}" Command="{Binding ShowOrganizationsViewCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <Icon:PackIconMaterial Kind="AccountGroup" Style="{StaticResource menuButtonIcon}"/>
-                                    <TextBlock Text="Организации"/>
+                                    <TextBlock Style="{StaticResource menuButtonText}" Text="Организации"/>
                                 </StackPanel>
-                            </Button>
+                            </RadioButton>
+                            
                         </StackPanel>
-                        <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="15 0 15 20">
+                        
+                        <Button Tag="{StaticResource mainColor1}" Style="{StaticResource menuExitButton}" VerticalAlignment="Bottom" 
+                                DockPanel.Dock="Bottom" Command="{Binding LogoutCommand}">
                             <StackPanel Orientation="Horizontal">
-                                <Icon:PackIconMaterial Kind="Logout" Style="{StaticResource menuButtonIcon}"/>
-                                <TextBlock Text="Выход"/>
+                                <Icon:PackIconMaterial Kind="Logout" Style="{StaticResource menuExitButtonIcon}"/>
+                                <TextBlock Style="{StaticResource menuExitButtonText}" Text="Выход"/>
                             </StackPanel>
                         </Button>
                     </DockPanel>
@@ -76,38 +111,61 @@
             </Grid>
 
             <!--Main Section-->
-            <Grid Grid.Column="1" Margin="10 10 10 20">
+            <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="65"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
+                <!--Top Buttons-->
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <Button Style="{StaticResource controlTabButton}" Margin="0 0 15 0">
+                        <Icon:PackIconMaterial Kind="Cog" Height="15" Width="15"/>
+                    </Button>
+
+                    <Button Style="{StaticResource controlTabButton}" HorizontalAlignment="Right" 
+                            Click="minimizeButtonClick" Margin="0 0 0 0">
+                        <Icon:PackIconMaterial Kind="WindowMinimize" Height="15" Width="15"/>
+                    </Button>
+
+                    <Button Style="{StaticResource controlTabButton}" HorizontalAlignment="Right" 
+                            Click="maximizeButtonClick" Margin="0 0 0 0">
+                        <Icon:PackIconMaterial Kind="WindowMaximize" Height="15" Width="15"/>
+                    </Button>
+
+                    <Button Style="{StaticResource controlTabButtonExit}" HorizontalAlignment="Right" 
+                            Click="exitButtonClick" Margin="0 0 0 0">
+                        <Icon:PackIconMaterial Kind="CloseCircle" Height="15" Width="15"/>
+                    </Button>
+                </StackPanel>
+
                 <!--SearchBox-->
-                <Grid Width="300" HorizontalAlignment="Left">
-                    <TextBlock Margin="20 0 0 0" VerticalAlignment="Center" Foreground="#6e7783" IsHitTestVisible="False" 
-                               Panel.ZIndex="1" Text="Поиск..." Visibility="{Binding ElementName=textSearch, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}"/>
-                    <TextBox x:Name="textSearch" Style="{StaticResource searchBox}"/>
+                
+                <Grid Grid.Row="1" Width="300" HorizontalAlignment="Left">
+                    
+                    <TextBlock Margin="40 0 0 0" VerticalAlignment="Center" Foreground="#6e7783" IsHitTestVisible="False" 
+                               Panel.ZIndex="1" Text="Поиск..." Visibility="{Binding ElementName=textSearch, 
+                            Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}"/>
+                    <TextBox Margin="20 0 0 0" x:Name="textSearch" Style="{StaticResource searchBox}"/>
 
                     <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" Foreground="#b0b9c6" HorizontalAlignment="Right"/>
                 </Grid>
-                
-                <!--Top Buttons-->
-                <Button Style="{StaticResource topButton}" Margin="0 0 95 0" HorizontalAlignment="Right" >
-                    <Icon:PackIconMaterial Kind="Cog" Height="15" Width="15"/>
-                </Button>
 
-                <Button Style="{StaticResource topButton}" Margin="0 0 55 0" HorizontalAlignment="Right" Click="maximizeButtonClick">
-                    <Icon:PackIconMaterial Kind="WindowMaximize" Height="15" Width="15"/>
-                </Button>
+                <!--Caption-->
 
-                <Button Style="{StaticResource topButton}" Margin="0 0 15 0" HorizontalAlignment="Right" Click="exitButtonClick">
-                    <Icon:PackIconMaterial Kind="CloseCircle" Height="15" Width="15"/>
-                </Button>
+                <StackPanel Grid.Row="2" Margin="20" Orientation="Horizontal">
+                    <Icon:PackIconMaterial Kind="{Binding Icon}" Foreground="{StaticResource mainColor2}" Height="25" Width="25"/>
+                    <TextBlock Text="{Binding Caption}" Margin="10 0 0 0" FontFamily="Calibri" Foreground="{StaticResource mainColor2}" FontSize="20" FontWeight="Black"/>
+                </StackPanel>
+
+                <!--Content section-->
+
+                <ContentControl Content="{Binding CurrentChildView}" Grid.Row="3" Margin="25">
+                    
+                </ContentControl>
             </Grid>
         </Grid>
     </Border>

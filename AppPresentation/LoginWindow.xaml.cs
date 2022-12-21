@@ -14,6 +14,9 @@ namespace View
         public LoginWindow()
         {
             InitializeComponent();
+
+            this.MaxHeight = this.Height;
+            this.MaxWidth = this.Width;
         }
 
         private void mainBorderMouseDown(object sender, MouseButtonEventArgs e)

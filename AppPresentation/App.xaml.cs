@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using ViewModel;
-using ViewModel.Utilities;
 
 namespace View 
 {
@@ -15,7 +14,7 @@ namespace View
     {
         private MainWindow mainWindow;
         private LoginWindow loginWindow;
-        private StandardKernel kernel;
+        //private StandardKernel kernel;
 
         protected void ApplicationStart(object sender, StartupEventArgs e)
         {
@@ -24,6 +23,7 @@ namespace View
             //IModelOperations modelOperations = kernel.Get<ModelOperations>();
 
             loginWindow = new LoginWindow();
+
             loginWindow.Show();
 
             loginWindow.IsVisibleChanged += (s, ev) =>
@@ -31,6 +31,17 @@ namespace View
                 if (loginWindow.IsVisible == false && loginWindow.IsLoaded)
                 {
                     mainWindow = new MainWindow();
+
+                    mainWindow.IsVisibleChanged += (s1, ev1) =>
+                    {
+                        if (mainWindow.IsVisible == false && mainWindow.IsLoaded)
+                        {
+                            loginWindow = new LoginWindow();
+
+                            loginWindow.Show();
+                            mainWindow.Close();
+                        }
+                    };
 
                     mainWindow.Show();
                     loginWindow.Close();

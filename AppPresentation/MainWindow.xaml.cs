@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
 
 namespace View
 {
@@ -24,10 +26,20 @@ namespace View
         public MainWindow()
         {
             InitializeComponent();
+
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
         }
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
         private void mainBorderMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left) this.DragMove();
+            WindowInteropHelper helper = new WindowInteropHelper(this);
+            SendMessage(helper.Handle, 161, 2, 0);
+        }
+        private void minimizeButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
         }
         private void maximizeButtonClick(object sender, RoutedEventArgs e)
         {

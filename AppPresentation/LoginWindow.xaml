@@ -18,27 +18,53 @@
     <Window.Visibility>
         <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
     </Window.Visibility>
-    
-    <Border Background="White" CornerRadius="30" MouseDown="mainBorderMouseDown">
+
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding LoginCommand}" Key="Return"/>
+    </Window.InputBindings>
+
+    <Border CornerRadius="15" MouseDown="mainBorderMouseDown" BorderThickness="3">
+        <Border.BorderBrush>
+            <LinearGradientBrush>
+                <GradientStop Color="{StaticResource backgroundColor1}" Offset="0"/>
+                <GradientStop Color="{StaticResource backgroundColor0}" Offset="1.5"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Border.Background>
+            <LinearGradientBrush>
+                <GradientStop Color="{StaticResource backgroundColor0}" Offset="0"/>
+                <GradientStop Color="{StaticResource backgroundColor3}" Offset="3"/>
+            </LinearGradientBrush>
+        </Border.Background>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
-            <Button Style="{StaticResource topButton}" Margin="0 0 15 0" HorizontalAlignment="Right" Click="closeButtonClick">
-                <Icon:PackIconMaterial Kind="CloseCircle" Height="15" Width="15"/>
-            </Button>
-            <Button Style="{StaticResource topButton}" Margin="0 0 55 0" HorizontalAlignment="Right" Click="minimizeButtonClick">
-                <Icon:PackIconMaterial Kind="WindowMinimize" Height="15" Width="15"/>
-            </Button>
 
-            <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="Добро пожаловать!" FontSize="44" FontFamily="Calibri Light" Foreground="#4E7CA6"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Button Style="{StaticResource controlTabButton}" Margin="0 0 0 0" HorizontalAlignment="Right" Click="minimizeButtonClick">
+                    <Icon:PackIconMaterial Kind="WindowMinimize" Height="15" Width="15"/>
+                </Button>
+                <Button Style="{StaticResource controlTabButtonExit}" Margin="0 0 0 0" HorizontalAlignment="Right" Click="closeButtonClick">
+                    <Icon:PackIconMaterial Kind="CloseCircle" Height="15" Width="15"/>
+                </Button>
+            </StackPanel>
+
+            <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    CornerRadius="15" Padding="20 15 20 15">
+                <TextBlock Text="Добро пожаловать!" FontSize="56" Foreground="{StaticResource mainColor1}" FontFamily="Calibri Light"/>
             </Border>
 
-            <Border Grid.Row="2" Height="200" Width="250" Margin="100 30 100 50" Background="AliceBlue" CornerRadius="30">
+            <Border Grid.Row="2" Height="200" Width="250" Margin="100 30 100 50" Background="#FFE7F2FB" CornerRadius="15"
+                    BorderThickness="2">
+                <Border.BorderBrush>
+                    <LinearGradientBrush>
+                        <GradientStop Color="{StaticResource backgroundColor1}" Offset="-1"/>
+                        <GradientStop Color="{StaticResource backgroundColor0}" Offset="1.75"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -57,14 +83,20 @@
                             <TextBlock Style="{StaticResource loginFormTextBlock}" Text="Пароль" VerticalAlignment="Center"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right">
-                            <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource loginFormTextBox}" Width="125" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource loginFormTextBox}" 
+                                     Width="120"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right">
-                            <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" Style="{StaticResource loginFormPasswordBox}" Width="125" 
-                                         VerticalAlignment="Center" HorizontalAlignment="Right" PasswordChar="*" MaxLength="16"/>
+                            <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" Style="{StaticResource loginFormPasswordBox}" 
+                                         VerticalAlignment="Center" HorizontalAlignment="Right" PasswordChar="*" MaxLength="16"
+                                         Width="120"/>
+                            <!--<Button Style="{StaticResource topButton}" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                    Margin="0 -36 30 0" Width="20" Height="20">
+                                <Icon:PackIconMaterial Kind="Eye" Height="10" Width="10"/>
+                            </Button>-->
                         </StackPanel>
                     </Grid>
-                    <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" FontFamily="Calibri Light" FontSize="12"
+                    <TextBlock Text="{Binding ErrorMessage}" Foreground="#FFD23D3D" FontFamily="Calibri" FontSize="12" FontWeight="Bold"
                                TextAlignment="Center" TextWrapping="Wrap"/>
                     <Button Content="Войти" Width="100" Style="{StaticResource loginFormButton}" Margin="7.5" HorizontalAlignment="Center"
                             Command="{Binding LoginCommand}"/>

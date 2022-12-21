@@ -18,7 +18,7 @@ namespace ViewModel.LoginWindow
 {
     public class LoginWindowViewModel : ViewModelBase
     {
-        private string _username;
+        private string _username = "florencecat";
         private SecureString _securePassword;
         private string _errorMessage;
         private bool _isViewVisible = true;
@@ -62,10 +62,6 @@ namespace ViewModel.LoginWindow
             }
         }
 
-        public ICommand LoginCommand { get; }
-        public ICommand ShowPasswordCommand { get; }
-        public ICommand RememberCommand { get; }
-
         public LoginWindowViewModel()
         {
             this.dbRepository = new DbRepository();
@@ -73,6 +69,7 @@ namespace ViewModel.LoginWindow
             LoginCommand = new RelayCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
         }
 
+        public ICommand LoginCommand { get; }
         private bool CanExecuteLoginCommand(object obj)
         {
             bool dataValidation;
@@ -85,7 +82,6 @@ namespace ViewModel.LoginWindow
 
             return dataValidation;
         }
-
         private void ExecuteLoginCommand(object obj)
         {
             ErrorMessage = "";

@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ViewModel
+namespace ViewModel.MainWindow.Sections
 {
-    public interface IModelOperations
+    public class HomeViewModel : ViewModelBase
     {
-
     }
 }
