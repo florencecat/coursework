@@ -5,23 +5,81 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:View"
              xmlns:viewModel="clr-namespace:ViewModel.MainWindow.Sections;assembly=ViewModel"
+             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
              d:DesignHeight="519" d:DesignWidth="824"
              Background="Transparent">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </UserControl.Resources>
     
     <UserControl.DataContext>
         <viewModel:EventsViewModel/>
     </UserControl.DataContext>
-    
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        
+        <!--Top Buttons-->
+        
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <StackPanel>
+                    <Grid Grid.Row="1" Width="300" Height="35" HorizontalAlignment="Left">
+
+                        <TextBlock Margin="30 0 0 0" VerticalAlignment="Center" Foreground="#6e7783" IsHitTestVisible="False" 
+                               Panel.ZIndex="1" Text="Поиск..." Visibility="{Binding ElementName=textSearch, 
+                            Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}"/>
+                        <TextBox Margin="10 0 0 0" x:Name="textSearch" Style="{StaticResource searchBox}"/>
+
+                        <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" 
+                                           Foreground="#b0b9c6" HorizontalAlignment="Right"/>
+                    </Grid>
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <Button Tag="{StaticResource secondaryColor4}" Style="{StaticResource contentChildButton}" Width="90" 
+                         Margin="25 0 0 0">
+                        <StackPanel Orientation="Horizontal">
+                            <Icon:PackIconMaterial Kind="Creation" Style="{StaticResource contentChildButtonIcon}" 
+                                               VerticalAlignment="Center"/>
+                            <TextBlock Text="Создать" Style="{StaticResource contentChildButtonText}" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <Button Tag="{StaticResource secondaryColor4}" Style="{StaticResource contentChildButton}" Width="90" 
+                         Margin="25 0 0 0">
+                        <StackPanel Orientation="Horizontal">
+                            <Icon:PackIconMaterial Kind="TrashCan" Style="{StaticResource contentChildButtonIcon}" 
+                                               VerticalAlignment="Center"/>
+                            <TextBlock Text="Удалить" Style="{StaticResource contentChildButtonText}" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <!--Data Grid-->
 
         <Border Grid.Row="1">
-            <DataGrid x:Name="eventsGrid" AutoGenerateColumns="True" ItemsSource="{Binding EventsList}">
-                
+            <DataGrid x:Name="eventsGrid" AutoGenerateColumns="False" ItemsSource="{Binding EventsList}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Path=id}"/>
+                    <DataGridCheckBoxColumn Header="Архивное" Binding="{Binding Path=archived}"/>
+                    <DataGridComboBoxColumn Header="Автор" ItemsSource="{Binding UsersList}"/>
+                    <DataGridTextColumn Header="Название" Binding="{Binding Path=name}"/>
+                    <DataGridComboBoxColumn Header="Категория" ItemsSource="{Binding CategoriesList}"/>
+                    <DataGridTextColumn Header="Дата" Binding="{Binding Path=date}"/>
+                    <DataGridTextColumn Header="Описание" Binding="{Binding Path=description}"/>
+                    <DataGridTextColumn Header="Обложка" Binding="{Binding Path=preview}"/>
+                    <DataGridTextColumn Header="Цена" Binding="{Binding Path=cost}"/>
+                </DataGrid.Columns>
             </DataGrid>
         </Border>
     </Grid>

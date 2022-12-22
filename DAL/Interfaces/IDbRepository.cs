@@ -10,9 +10,9 @@ namespace Model.Interfaces
     public interface IDbRepository
     {
         IUserRepository Users { get; }
-        IRepository<events> Events { get; }
+        IEventRepository Events { get; }
         IRepository<reviews> Reviews { get; }
-        IRepository<categories> Categories { get; }
+        ICategoryRepository Categories { get; }
         IAccessRepository AccessLevels { get; }
         IRepository<participations> Participations { get; }
 

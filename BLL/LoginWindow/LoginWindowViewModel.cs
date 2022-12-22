@@ -19,7 +19,7 @@ namespace ViewModel.LoginWindow
     public class LoginWindowViewModel : ViewModelBase
     {
         private string _username = "florencecat";
-        private SecureString _securePassword;
+        private string _password;
         private string _errorMessage;
         private bool _isViewVisible = true;
 
@@ -34,13 +34,13 @@ namespace ViewModel.LoginWindow
                 OnPropertyChanged(nameof(Username));
             }
         }
-        public SecureString SecurePassword 
+        public string Password 
         {
-            get => _securePassword;
+            get => _password;
             set
             {
-                _securePassword = value;
-                OnPropertyChanged(nameof(SecurePassword));
+                _password = value;
+                OnPropertyChanged(nameof(Password));
             }
         }
         public string ErrorMessage
@@ -75,7 +75,7 @@ namespace ViewModel.LoginWindow
             bool dataValidation;
 
             if (string.IsNullOrWhiteSpace(Username) || Username.Length < 4 ||
-                SecurePassword == null || SecurePassword.Length < 3)
+                Password == null || Password.Length < 3)
                 dataValidation = false;
             else
                 dataValidation = true;
@@ -85,7 +85,10 @@ namespace ViewModel.LoginWindow
         private void ExecuteLoginCommand(object obj)
         {
             ErrorMessage = "";
-            bool validation = dbRepository.Users.AuthenticateUser(new NetworkCredential(Username, SecurePassword));
+
+            //dbRepository.Users.CreatePasswordForUser(new NetworkCredential(Username, Password));
+
+            bool validation = dbRepository.Users.AuthenticateUser(new NetworkCredential() { UserName = Username, Password = Password });
 
             if (validation)
             {

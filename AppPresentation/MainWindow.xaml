@@ -151,7 +151,8 @@
                             Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}"/>
                     <TextBox Margin="20 0 0 0" x:Name="textSearch" Style="{StaticResource searchBox}"/>
 
-                    <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" Foreground="#b0b9c6" HorizontalAlignment="Right"/>
+                    <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" 
+                                           Foreground="#b0b9c6" HorizontalAlignment="Right"/>
                 </Grid>
 
                 <!--Caption-->

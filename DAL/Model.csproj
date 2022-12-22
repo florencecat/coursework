@@ -56,6 +56,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\ICategoryRepository.cs" />
+    <Compile Include="Interfaces\IEventRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Migrations\202212141821296_NicknameAddedMigration.cs" />
     <Compile Include="Migrations\202212141821296_NicknameAddedMigration.designer.cs">

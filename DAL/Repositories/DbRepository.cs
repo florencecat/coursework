@@ -13,9 +13,9 @@ namespace Model.Repositories
         private EventsContext eventsContext;
 
         private UsersRepository usersRepository;
-        //private EventsRepository eventsRepository;
+        private EventsRepository eventsRepository;
         //private ReviewsRepository reviewsRepository;
-        //private CategoriesRepository categoriesRepository;
+        private CategoriesRepository categoriesRepository;
         private AccessLevelsRepository accessLevelsRepository;
         //private ParticipationsRepository participationsRepository;
 
@@ -35,11 +35,29 @@ namespace Model.Repositories
             }
         }
 
-        public IRepository<events> Events => throw new NotImplementedException();
+        public IEventRepository Events
+        {
+            get
+            {
+                if (eventsRepository == null)
+                    eventsRepository = new EventsRepository(eventsContext);
+
+                return eventsRepository;
+            }
+        }
 
         public IRepository<reviews> Reviews => throw new NotImplementedException();
 
-        public IRepository<categories> Categories => throw new NotImplementedException();
+        public ICategoryRepository Categories
+        {
+            get
+            {
+                if (categoriesRepository == null)
+                    categoriesRepository = new CategoriesRepository(eventsContext);
+
+                return categoriesRepository;
+            }
+        }
 
         public IAccessRepository AccessLevels
         {

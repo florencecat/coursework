@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище EventsContext" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище EventsContext" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="accessLevels">
           <Key>
             <PropertyRef Name="id" />
@@ -19,7 +19,7 @@
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="name" Type="varchar(max)" Nullable="false" />
           <Property Name="description" Type="varchar(max)" />
-          <Property Name="icon" Type="image" Nullable="false" />
+          <Property Name="icon" Type="image" />
         </EntityType>
         <EntityType Name="events">
           <Key>
@@ -32,7 +32,7 @@
           <Property Name="category" Type="uniqueidentifier" Nullable="false" />
           <Property Name="date" Type="date" Nullable="false" />
           <Property Name="description" Type="varchar(max)" Nullable="false" />
-          <Property Name="preview" Type="image" Nullable="false" />
+          <Property Name="preview" Type="image" />
           <Property Name="cost" Type="int" />
         </EntityType>
         <EntityType Name="participations">
@@ -57,11 +57,12 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="nickname" Type="varchar(max)" />
+          <Property Name="nickname" Type="varchar(max)" Nullable="false" />
           <Property Name="name" Type="varchar(max)" />
           <Property Name="surname" Type="varchar(max)" />
           <Property Name="birthdate" Type="date" />
           <Property Name="email" Type="varchar(max)" Nullable="false" />
+          <Property Name="salt" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="type" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
@@ -169,8 +170,7 @@
             <End Role="users" EntitySet="users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EventsContext" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -189,7 +189,7 @@
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="icon" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="icon" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="events" Relationship="Self.FK_events_categories" FromRole="categories" ToRole="events" />
         </EntityType>
         <EntityType Name="events">
@@ -203,7 +203,7 @@
           <Property Name="category" Type="Guid" Nullable="false" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="preview" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="preview" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="cost" Type="Int32" />
           <NavigationProperty Name="categories" Relationship="Self.FK_events_categories" FromRole="events" ToRole="categories" />
           <NavigationProperty Name="users" Relationship="Self.FK_events_users" FromRole="events" ToRole="users" />
@@ -235,7 +235,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="nickname" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="nickname" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="surname" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="birthdate" Type="DateTime" Precision="0" />
@@ -245,6 +245,7 @@
           <NavigationProperty Name="accessLevels" Relationship="Self.FK_users_accessLevels" FromRole="users" ToRole="accessLevels" />
           <NavigationProperty Name="events" Relationship="Self.FK_events_users" FromRole="users" ToRole="events" />
           <NavigationProperty Name="participations" Relationship="Self.FK_participations_users" FromRole="users" ToRole="participations" />
+          <Property Name="salt" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_users_accessLevels">
           <End Role="accessLevels" Type="Self.accessLevels" Multiplicity="1" />
@@ -411,6 +412,7 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="EventsContext.users">
               <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="salt" ColumnName="salt" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nickname" ColumnName="nickname" />
                 <ScalarProperty Name="name" ColumnName="name" />

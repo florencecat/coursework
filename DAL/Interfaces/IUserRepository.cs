@@ -12,8 +12,9 @@ namespace Model.Interfaces
     public interface IUserRepository
     {
         bool AuthenticateUser(NetworkCredential credential);
-        string HashPassword(SecureString password);
-        bool VerifyHashedPassword(string hashedPassword, SecureString password);
+        string HashPassword(string password);
+        bool VerifyHashedPassword(string hashedPassword, string password);
+        void CreatePasswordForUser(NetworkCredential credential);
         users GetItemByUsername(string Username);
         List<users> GetList();
         users GetItem(Guid id);
