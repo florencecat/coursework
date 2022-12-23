@@ -9,11 +9,11 @@ namespace Model.Interfaces
 {
     public interface IDbRepository
     {
-        IUserRepository Users { get; }
-        IEventRepository Events { get; }
+        IRepository<users> Users { get; }
+        IRepository<events> Events { get; }
         IRepository<reviews> Reviews { get; }
-        ICategoryRepository Categories { get; }
-        IAccessRepository AccessLevels { get; }
+        IRepository<categories> Categories { get; }
+        IRepository<accessLevels> AccessLevels { get; }
         IRepository<participations> Participations { get; }
 
         int Save();

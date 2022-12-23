@@ -1,28 +1,20 @@
-﻿using Ninject;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using ViewModel;
 
-namespace View 
+namespace View
 {
-    public partial class App : Application
+    public class Registrator
     {
         private MainWindow mainWindow;
         private LoginWindow loginWindow;
-        //private StandardKernel kernel;
 
-        protected void ApplicationStart(object sender, StartupEventArgs e)
+        public Registrator()
         {
-            //kernel = new StandardKernel(new NinjectRegistration(), new ServiceModule("EventsContext"));
-
-            //IModelOperations modelOperations = kernel.Get<ModelOperations>();
-
             loginWindow = new LoginWindow();
+            mainWindow = new MainWindow();
 
             loginWindow.Show();
 
@@ -36,6 +28,10 @@ namespace View
                     loginWindow.Close();
                 }
             };
+
+            
         }
+
+        
     }
 }

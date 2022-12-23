@@ -1,6 +1,7 @@
 ﻿using Model.Interfaces;
 using Model.Models;
 using Model.Repositories;
+using Model.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,7 +24,8 @@ namespace ViewModel.LoginWindow
         private string _errorMessage;
         private bool _isViewVisible = true;
 
-        DbRepository dbRepository;
+        private DbRepository dbRepository;
+        private UserService userService;
 
         public string Username 
         {
@@ -64,7 +66,8 @@ namespace ViewModel.LoginWindow
 
         public LoginWindowViewModel()
         {
-            this.dbRepository = new DbRepository();
+            dbRepository = new DbRepository();
+            userService = new UserService();
 
             LoginCommand = new RelayCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
         }
@@ -75,8 +78,12 @@ namespace ViewModel.LoginWindow
             bool dataValidation;
 
             if (string.IsNullOrWhiteSpace(Username) || Username.Length < 4 ||
-                Password == null || Password.Length < 3)
+                Password == null || Password.Length < 3 ||
+                userService.GetItemByUsername(Username).accessLevels.name == "User")
+            {
+                Password = null;
                 dataValidation = false;
+            }
             else
                 dataValidation = true;
 
@@ -88,11 +95,11 @@ namespace ViewModel.LoginWindow
 
             //dbRepository.Users.CreatePasswordForUser(new NetworkCredential(Username, Password));
 
-            bool validation = dbRepository.Users.AuthenticateUser(new NetworkCredential() { UserName = Username, Password = Password });
+            bool validation = userService.AuthenticateUser(new NetworkCredential() { UserName = Username, Password = Password });
 
             if (validation)
             {
-                users user = dbRepository.Users.GetItemByUsername(Username);
+                users user = userService.GetItemByUsername(Username);
 
                 Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(user.nickname), null);
                 IsViewVisible = false;

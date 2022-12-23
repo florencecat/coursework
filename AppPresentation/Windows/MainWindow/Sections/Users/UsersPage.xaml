@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="View.UsersPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:View"
+             xmlns:viewModel="clr-namespace:ViewModel.MainWindow.Sections;assembly=ViewModel"
+             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             d:DesignHeight="579" d:DesignWidth="844"
+             Background="Transparent">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </UserControl.Resources>
+
+    <UserControl.DataContext>
+        <viewModel:UsersViewModel/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!--Top Buttons-->
+
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <StackPanel>
+                    <Grid Grid.Row="1" Width="300" Height="35" HorizontalAlignment="Left">
+
+                        <TextBlock Margin="30 0 0 0" VerticalAlignment="Center" Foreground="#6e7783" IsHitTestVisible="False" 
+                               Panel.ZIndex="1" Text="Поиск..." Visibility="{Binding ElementName=textSearch, 
+                            Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}"/>
+                        <TextBox Margin="10 0 0 0" x:Name="textSearch" Style="{StaticResource searchBox}"/>
+
+                        <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" 
+                                           Foreground="#b0b9c6" HorizontalAlignment="Right"/>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <Button Tag="{StaticResource secondaryColor8}" Style="{StaticResource contentChildButton}" Width="90" 
+                         Command="{Binding AddUser}" Click="CreateButton_Click" Margin="40 0 0 0">
+                        <StackPanel Orientation="Horizontal">
+                            <Icon:PackIconMaterial Kind="Creation" Style="{StaticResource contentChildButtonIcon}" 
+                                               VerticalAlignment="Center"/>
+                            <TextBlock Text="Создать" Style="{StaticResource contentChildButtonText}" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <Button Tag="{StaticResource secondaryColor8}" Style="{StaticResource contentChildButton}" Width="90" 
+                         Command="{Binding UpdateUser}" Click="UpdateButton_Click" Margin="25 0 0 0">
+                        <StackPanel Orientation="Horizontal">
+                            <Icon:PackIconMaterial Kind="NoteEdit" Style="{StaticResource contentChildButtonIcon}" 
+                                               VerticalAlignment="Center"/>
+                            <TextBlock Text="Изменить" Style="{StaticResource contentChildButtonText}" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <Button Tag="{StaticResource secondaryColor8}" Style="{StaticResource contentChildButton}" Width="90" 
+                         Command="{Binding DeleteUser}" Margin="25 0 0 0">
+                        <StackPanel Orientation="Horizontal">
+                            <Icon:PackIconMaterial Kind="TrashCan" Style="{StaticResource contentChildButtonIcon}" 
+                                               VerticalAlignment="Center"/>
+                            <TextBlock Text="Удалить" Style="{StaticResource contentChildButtonText}" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <!--Data Grid-->
+
+        <Border Grid.Row="2">
+            <StackPanel Tag="{StaticResource secondaryColor7}">
+                <DataGrid x:Name="eventsGrid" Tag="{StaticResource secondaryColor6}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}" 
+                      RowStyle="{DynamicResource DataGridRowStyle}" ItemsSource="{Binding UsersList}" 
+                      Style="{StaticResource dataGridStyle}" CellStyle="{StaticResource DataGridCellStyle}"
+                          SelectedItem="{Binding Path=SelectedUser}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding Path=name}" Width="*"/>
+                        <DataGridTextColumn Header="Фамилия" Binding="{Binding Path=surname}" Width="*"/>
+                        <DataGridTextColumn Header="Логин" Binding="{Binding Path=nickname}" Width="*"/>
+                        <DataGridTextColumn Header="Дата рождения" Binding="{Binding Path=birthdate}" Width="*"/>
+                        <DataGridTextColumn Header="Почта" Binding="{Binding Path=email}" Width="200"/>
+                        <DataGridTextColumn Header="Тип" Binding="{Binding Path=accessLevels.name}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

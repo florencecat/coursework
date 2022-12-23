@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace View
 {
     /// <summary>
-    /// Логика взаимодействия для OrganizationsView.xaml
+    /// Логика взаимодействия для OrganizationsPage.xaml
     /// </summary>
-    public partial class OrganizationsView : UserControl
+    public partial class OrganizationsPage : UserControl
     {
-        public OrganizationsView()
+        public OrganizationsPage()
         {
             InitializeComponent();
         }

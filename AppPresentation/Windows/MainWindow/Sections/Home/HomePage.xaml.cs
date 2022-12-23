@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace View
 {
     /// <summary>
-    /// Логика взаимодействия для EventsView.xaml
+    /// Логика взаимодействия для HomePage.xaml
     /// </summary>
-    public partial class EventsView : UserControl
+    public partial class HomePage : UserControl
     {
-        public EventsView()
+        public HomePage()
         {
             InitializeComponent();
         }

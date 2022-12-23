@@ -10,19 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace View
 {
     /// <summary>
-    /// Логика взаимодействия для UsersView.xaml
+    /// Логика взаимодействия для EventCreateWindow.xaml
     /// </summary>
-    public partial class UsersView : UserControl
+    public partial class EventCreateWindow : Window
     {
-        public UsersView()
+        public EventCreateWindow()
         {
             InitializeComponent();
+        }
+
+        private void mainBorderMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left) this.DragMove();
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Model.Repositories
 {
-    internal class CategoriesRepository : ICategoryRepository
+    internal class CategoriesRepository : IRepository<categories>
     {
         EventsContext eventsContext;
 

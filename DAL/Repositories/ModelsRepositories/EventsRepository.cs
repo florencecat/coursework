@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Model.Repositories
 {
-    internal class EventsRepository : IEventRepository
+    internal class EventsRepository : IRepository<events>
     {
         EventsContext eventsContext;
 
@@ -17,6 +17,8 @@ namespace Model.Repositories
         public void CreateItem(events item)
         {
             eventsContext.events.Add(item);
+
+            eventsContext.SaveChanges();
         }
 
         public events DeleteItem(Guid id)
@@ -25,6 +27,8 @@ namespace Model.Repositories
 
             if (@event != null)
                 eventsContext.events.Remove(@event);
+
+            eventsContext.SaveChanges();
 
             return @event;
         }
@@ -36,6 +40,7 @@ namespace Model.Repositories
         public void UpdateItem(events item)
         {
             eventsContext.Entry(item).State = System.Data.Entity.EntityState.Modified;
+
             eventsContext.SaveChanges();
         }
     }

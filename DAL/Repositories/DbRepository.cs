@@ -14,17 +14,17 @@ namespace Model.Repositories
 
         private UsersRepository usersRepository;
         private EventsRepository eventsRepository;
-        //private ReviewsRepository reviewsRepository;
+        private ReviewsRepository reviewsRepository;
         private CategoriesRepository categoriesRepository;
         private AccessLevelsRepository accessLevelsRepository;
-        //private ParticipationsRepository participationsRepository;
+        private ParticipationsRepository participationsRepository;
 
         public DbRepository()
         {
             eventsContext = new EventsContext();
         }
 
-        public IUserRepository Users
+        public IRepository<users> Users
         {
             get
             {
@@ -35,7 +35,7 @@ namespace Model.Repositories
             }
         }
 
-        public IEventRepository Events
+        public IRepository<events> Events
         {
             get
             {
@@ -46,9 +46,18 @@ namespace Model.Repositories
             }
         }
 
-        public IRepository<reviews> Reviews => throw new NotImplementedException();
+        public IRepository<reviews> Reviews
+        {
+            get
+            {
+                if (reviewsRepository == null)
+                    reviewsRepository = new ReviewsRepository(eventsContext);
 
-        public ICategoryRepository Categories
+                return reviewsRepository;
+            }
+        }
+
+        public IRepository<categories> Categories
         {
             get
             {
@@ -59,7 +68,7 @@ namespace Model.Repositories
             }
         }
 
-        public IAccessRepository AccessLevels
+        public IRepository<accessLevels> AccessLevels
         {
             get
             {
@@ -70,7 +79,16 @@ namespace Model.Repositories
             }
         }
 
-        public IRepository<participations> Participations => throw new NotImplementedException();
+        public IRepository<participations> Participations
+        {
+            get
+            {
+                if (participationsRepository == null)
+                    participationsRepository = new ParticipationsRepository(eventsContext);
+
+                return participationsRepository;
+            }
+        }
 
         public int Save() => this.eventsContext.SaveChanges();
     }

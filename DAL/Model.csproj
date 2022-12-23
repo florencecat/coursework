@@ -43,6 +43,7 @@
     <Reference Include="Ninject, Version=3.3.6.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.3.6\lib\net45\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -56,9 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\ICategoryRepository.cs" />
-    <Compile Include="Interfaces\IEventRepository.cs" />
-    <Compile Include="Interfaces\IUserRepository.cs" />
+    <Compile Include="Interfaces\IReportRepository.cs" />
     <Compile Include="Migrations\202212141821296_NicknameAddedMigration.cs" />
     <Compile Include="Migrations\202212141821296_NicknameAddedMigration.designer.cs">
       <DependentUpon>202212141821296_NicknameAddedMigration.cs</DependentUpon>
@@ -97,6 +96,7 @@
     <Compile Include="Models\participations.cs">
       <DependentUpon>EventsContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReportData.cs" />
     <Compile Include="Models\reviews.cs">
       <DependentUpon>EventsContext.tt</DependentUpon>
     </Compile>
@@ -108,10 +108,13 @@
     <Compile Include="Repositories\ModelsRepositories\CategoriesRepository.cs" />
     <Compile Include="Repositories\DbRepository.cs" />
     <Compile Include="Repositories\ModelsRepositories\EventsRepository.cs" />
-    <Compile Include="Interfaces\IAccessRepository.cs" />
     <Compile Include="Repositories\ModelsRepositories\ParticipationsRepository.cs" />
+    <Compile Include="Repositories\ModelsRepositories\ReportsRepository.cs" />
     <Compile Include="Repositories\ModelsRepositories\ReviewsRepository.cs" />
     <Compile Include="Repositories\ModelsRepositories\UsersRepository.cs" />
+    <Compile Include="Services\EventService.cs" />
+    <Compile Include="Services\ReportService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

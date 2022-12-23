@@ -161,6 +161,7 @@
     <Reference Include="Ninject, Version=3.3.6.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.3.6\lib\net45\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -182,23 +183,43 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BindingProxy.cs" />
-    <Compile Include="UsersView.xaml.cs">
-      <DependentUpon>UsersView.xaml</DependentUpon>
+    <Compile Include="Registrator.cs" />
+    <Compile Include="Windows\MainWindow\Sections\Events\EventCreateWindow.xaml.cs">
+      <DependentUpon>EventCreateWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="EventsView.xaml">
+    <Compile Include="Windows\MainWindow\Sections\Events\EventUpdateWindow.xaml.cs">
+      <DependentUpon>EventUpdateWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainWindow\Sections\Users\UserCreateWindow.xaml.cs">
+      <DependentUpon>UserCreateWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainWindow\Sections\Users\UsersPage.xaml.cs">
+      <DependentUpon>UsersPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainWindow\Sections\Users\UserUpdateWindow.xaml.cs">
+      <DependentUpon>UserUpdateWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Windows\MainWindow\Sections\Events\EventCreateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HomeView.xaml">
+    <Page Include="Windows\MainWindow\Sections\Events\EventsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LoginWindow.xaml">
+    <Page Include="Windows\MainWindow\Sections\Events\EventUpdateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Windows\MainWindow\Sections\Home\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\LoginWindow\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MainWindow\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -206,20 +227,20 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="EventsView.xaml.cs">
-      <DependentUpon>EventsView.xaml</DependentUpon>
+    <Compile Include="Windows\MainWindow\Sections\Events\EventsPage.xaml.cs">
+      <DependentUpon>EventsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HomeView.xaml.cs">
-      <DependentUpon>HomeView.xaml</DependentUpon>
+    <Compile Include="Windows\MainWindow\Sections\Home\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LoginWindow.xaml.cs">
+    <Compile Include="Windows\LoginWindow\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Windows\MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="OrganizationsView.xaml">
+    <Page Include="Windows\MainWindow\Sections\Organizations\OrganizationsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -235,14 +256,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UsersView.xaml">
+    <Page Include="Windows\MainWindow\Sections\Users\UserCreateWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MainWindow\Sections\Users\UsersPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MainWindow\Sections\Users\UserUpdateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OrganizationsView.xaml.cs">
-      <DependentUpon>OrganizationsView.xaml</DependentUpon>
+    <Compile Include="Windows\MainWindow\Sections\Organizations\OrganizationsPage.xaml.cs">
+      <DependentUpon>OrganizationsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -282,9 +311,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Windows\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BLL\ViewModel.csproj">
       <Project>{E5C94D02-A604-4916-9737-52079A8C2D26}</Project>

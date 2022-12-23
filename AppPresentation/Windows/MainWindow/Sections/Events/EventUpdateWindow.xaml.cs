@@ -10,19 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace View
 {
     /// <summary>
-    /// Логика взаимодействия для HomeView.xaml
+    /// Логика взаимодействия для EventUpdateWindow.xaml
     /// </summary>
-    public partial class HomeView : UserControl
+    public partial class EventUpdateWindow : Window
     {
-        public HomeView()
+        public EventUpdateWindow()
         {
             InitializeComponent();
+        }
+
+        private void mainBorderMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left) this.DragMove();
         }
     }
 }
